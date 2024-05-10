@@ -1,7 +1,8 @@
 <?php
 
 use App\Http\Controllers\editProductController;
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProductController;
+use App\Models\Product;
 use Illuminate\Support\Facades\Route;
 
 
@@ -17,13 +18,14 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::get('/', [HomeController::class, 'Allproduct'])->name('listProduct');
-Route::get('/tambah',function(){
-    return view('welcome');
-});
-Route::get("/listProduct/{user_id}", [HomeController::class, 'show'])->name('listProduct');
-Route::get("/detailuser/{user_id}", [HomeController::class, 'detailUser']);
-Route::resource('/EditProduct',editProductController::class);
+Route::post('/{user}/post-request', [ProductController::class, 'postRequest'])->name('postRequest');
+Route::get('/{user}/tambah-product', [ProductController::class, 'handleRequest'])->name('form_product');
+Route::get('/products', [ProductController::class, 'getProduct'])->name('get_product');
+Route::get('/{user}/product/{product}', [ProductController::class, 'editProduct'])->name('edit_product');
+Route::put('/{user}/product/{product}/update', [ProductController::class, 'updateProduct'])->name('update_product');
+Route::post('/{user}/product/{product}/delete', [ProductController::class, 'deleteProduct'])->name('delete_product');
+Route::get('/profile/{user}', [ProductController::class, 'getProfile'])->name('get_profile');
 
+Route::get('/admin/{user}/list-products', [ProductController::class, 'getAdmin'])->name('Produk.admin_page');
 
 
