@@ -9,19 +9,21 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up()
+    public function up(): void
     {
-        Schema::create('user_profile', function (Blueprint $table) {
+        Schema::create('tokos', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->string('merchant_name');
-            $table->enum('rate', [1, 2, 3, 4, 5]);
-            $table->string('best_seller_product');
-            $table->text('description');
+            $table->string('nama');
+            $table->string('alamat');
+            $table->string('telepon');
+            $table->string('product_terbaik');
+            $table->text('deskripsi')->nullable();
             $table->timestamps();
-
+            
             $table->foreign('user_id')->references('id')->on('users');
         });
+        
     }
 
     /**
@@ -29,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('user_profile');
+        Schema::dropIfExists('tokos');
     }
 };

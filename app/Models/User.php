@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
+// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -17,18 +17,11 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-
-    protected $table = 'users';
     protected $fillable = [
-        'id',
         'name',
         'email',
         'password',
     ];
-
-    protected $dates = ['birthday'];
-
-    public $incrementing = true;
 
     /**
      * The attributes that should be hidden for serialization.
@@ -47,16 +40,17 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'birthday' => 'date',
+        'password' => 'hashed',
     ];
-
-    public function profile()
-    {
-        return $this->hasOne(UserProfile::class, 'user_id', 'id');
-    }
 
     public function products()
     {
-        return $this->hasMany(Product::class, 'user_id', 'id');
+        return $this->hasMany(Product::class);
+    }
+
+
+    public function toko()
+    {
+        return $this->hasOne(Toko::class);
     }
 }
